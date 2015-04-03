@@ -1,15 +1,17 @@
+//Modules
 var http = require('http');
 var companyData = require('./public/companyData.js');
 var express = require('express');
 var bodyParser = require('body-parser');
-
 var mongoose = require('mongoose');
+var logger = require('./logger');
+
+//Connect to MONGO DB
 mongoose.connect('mongodb://localhost:27017/stockTEMP_');
 
 var app = express();
 
-var logger = require('./logger');
-app.use(logger);
+app.use(logger);//will allow
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({extended: true}));
@@ -17,6 +19,7 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
+//Schema for Companies
 var companySchema = mongoose.Schema({
     name: String,
     openPrice: Number,
@@ -26,10 +29,9 @@ var companySchema = mongoose.Schema({
     changeIcon: String,
     changePercentage: Number,
     shareVolume: Number
-
-
 });
 
+//Schema for BuyOrder
 var buyOrderSchema = mongoose.Schema({
     timeStamp: Date,
     size: Number,
@@ -37,6 +39,7 @@ var buyOrderSchema = mongoose.Schema({
     company: String
 });
 
+//Schema for SellOrder
 var saleOrderSchema = mongoose.Schema({
     timeStamp: Date,
     size: Number,
@@ -44,38 +47,25 @@ var saleOrderSchema = mongoose.Schema({
     company: String
 });
 
+//Schema for Transactions
 var transactionSchema = mongoose.Schema({
     timeStamp: Date,
     size: Number,
     price: Number,
     company: String
 });
-
+//Adding the mongoode models for calls
 var Companies = mongoose.model('Companies', companySchema);
 var BuyOrders = mongoose.model('BuyOrders', buyOrderSchema);
 var SaleOrders = mongoose.model('SaleOrders', saleOrderSchema);
 var Transactions = mongoose.model('Transactions',transactionSchema);
 
+//Basic route to homepage
 app.get('/', function(request, response) {
     response.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/companies',function (request, response){
-    //response.json({companies: companyData.companies});
-    Companies.find(function (error, company) {
-        if (error) response.send(error);
-        response.json({Companies: company});
-    });
-
-});
-
-app.get('/buyOrders', function(request, response){
-    BuyOrders.find(function(error, buyOrder){
-        if(error) response.send(error);
-        response.json({buyOrders: buyOrder})
-    });
-});
-
+//Gets saleOrders from route
 app.get('/saleOrders', function(request, response){
     SaleOrders.find(function(error, saleOrder){
         if(error) response.send(error);
@@ -83,6 +73,24 @@ app.get('/saleOrders', function(request, response){
     });
 });
 
+//Get to companies, gets all companies
+app.get('/companies',function (request, response){
+    //response.json({companies: companyData.companies});
+    Companies.find(function (error, company) {
+        if (error) response.send(error);
+        response.json({Companies: company});
+    });
+});
+
+//Get to buyorders
+app.get('/buyOrders', function(request, response){
+    BuyOrders.find(function(error, buyOrder){
+        if(error) response.send(error);
+        response.json({buyOrders: buyOrder})
+    });
+});
+
+//Post to all companies
 app.post('/companies', function(request, response){
     var newCompany = new Companies({
 
@@ -102,22 +110,7 @@ app.post('/companies', function(request, response){
     });
 });
 
-app.post('/buyOrders', function(request, response){
-    var newbuyOrder = new BuyOrders({
-        timeStamp: request.body.buyOrder.timeStamp,
-        size: request.body.buyOrder.size,
-        price: request.body.buyOrder.price,
-        company: request.body.buyOrder.company
-    });
-
-    newbuyOrder.save(function(error){
-        if (error) response.send(error);
-        response.status(201).json({BuyOrders : newbuyOrder});
-    });
-
-    console.log(request.body);
-});
-
+//Post to sellOrders
 app.post('/saleOrders', function(request, response){
     var newsaleOrder = new SaleOrders({
         timeStamp: request.body.saleOrder.timeStamp,
@@ -134,6 +127,24 @@ app.post('/saleOrders', function(request, response){
     console.log(request.body);
 });
 
+//Post to buyorders
+app.post('/buyOrders', function(request, response){
+    var newbuyOrder = new BuyOrders({
+        timeStamp: request.body.buyOrder.timeStamp,
+        size: request.body.buyOrder.size,
+        price: request.body.buyOrder.price,
+        company: request.body.buyOrder.company
+    });
+
+    newbuyOrder.save(function(error){
+        if (error) response.send(error);
+        response.status(201).json({BuyOrders : newbuyOrder});
+    });
+
+    console.log(request.body);
+});
+
+//Post to transactions
 app.post('/transactions', function(request, response){
     var newTransaction = new Transactions({
         timeStamp: request.body.transaction.timeStamp,
@@ -150,6 +161,7 @@ app.post('/transactions', function(request, response){
     console.log(request.body);
 });
 
+//Put to a specified company
 app.put('/companies/:company_id', function(request, response){
     Companies.findById(request.params.company_id, function(error, company){
         if(error) response.send(error);
@@ -167,27 +179,11 @@ app.put('/companies/:company_id', function(request, response){
             if (error) response.send(error);
             response.status(201).json({Companies: company});
         });
-
     });
     console.log(request.body);
 });
 
-app.put('/buyOrders/:buyOrders_id', function(request,response){
-    BuyOrders.findById(request.params.buyOrders_id, function(error, buyOrder){
-        if(error) response.send(error);
-
-        buyOrder.timeStamp = request.body.buyOrder.timeStamp,
-            buyOrder.size = request.body.buyOrder.size,
-            buyOrder.price = request.body.buyOrder.price,
-            buyOrder.company = request.body.buyOrder.company
-
-        buyOrder.save(function (error){
-            if (error) response.send(error);
-            response.status(201).json({BuyOrders: buyOrder});
-        });
-    });
-});
-
+//Puts the SaleOrder with id
 app.put('/saleOrders/:saleOrders_id', function(request,response){
     SaleOrders.findById(request.params.saleOrders_id, function(error, saleOrder){
         if(error) response.send(error);
@@ -204,17 +200,23 @@ app.put('/saleOrders/:saleOrders_id', function(request,response){
     });
 });
 
-app.delete('/buyOrders/:buyOrders_id', function(request, response){
-    BuyOrders.remove({
-        _id: request.params.buyOrders_id
-    }, function(error, buyOrders){
-        if(error) response.send(err);
-        response.status(201).json({buyOrders: BuyOrders})
+// Puts the buy order with id
+app.put('/buyOrders/:buyOrders_id', function(request,response){
+    BuyOrders.findById(request.params.buyOrders_id, function(error, buyOrder){
+        if(error) response.send(error);
+
+        buyOrder.timeStamp = request.body.buyOrder.timeStamp,
+            buyOrder.size = request.body.buyOrder.size,
+            buyOrder.price = request.body.buyOrder.price,
+            buyOrder.company = request.body.buyOrder.company
+
+        buyOrder.save(function (error){
+            if (error) response.send(error);
+            response.status(201).json({BuyOrders: buyOrder});
+        });
     });
-
-
 });
-
+//Deletes sell order by id
 app.delete('/saleOrders/:saleOrders_id', function(request, response){
     SaleOrders.remove({
         _id: request.params.saleOrders_id
@@ -226,6 +228,18 @@ app.delete('/saleOrders/:saleOrders_id', function(request, response){
     console.log(response.body);
 });
 
-app.listen(3000 ,function () {
-    console.log('Listening on port 3000');
+//Deletes buy order by id
+app.delete('/buyOrders/:buyOrders_id', function(request, response){
+    BuyOrders.remove({
+        _id: request.params.buyOrders_id
+    }, function(error, buyOrders){
+        if(error) response.send(err);
+        response.status(201).json({buyOrders: BuyOrders})
+    });
+
+
+});
+
+app.listen(8080 ,function () {
+    console.log('Listening on port 8080');
 });;
