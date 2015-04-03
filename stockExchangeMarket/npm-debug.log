@@ -1,0 +1,100 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 verbose readDependencies using package.json deps
+5 verbose install where, deps [ '/Users/codybartel/Documents/SE3314B/SE3314BAssignment2/stockExchangeMarket',
+5 verbose install   [ 'body-parser', 'express', 'mongoose', 'Lock' ] ]
+6 info preinstall stockExchangeMarket@0.0.0
+7 verbose readDependencies using package.json deps
+8 verbose already installed skipping body-parser@~1.12.0 /Users/codybartel/Documents/SE3314B/SE3314BAssignment2/stockExchangeMarket
+9 verbose already installed skipping express@~4.12.2 /Users/codybartel/Documents/SE3314B/SE3314BAssignment2/stockExchangeMarket
+10 verbose already installed skipping mongoose@~3.8.25 /Users/codybartel/Documents/SE3314B/SE3314BAssignment2/stockExchangeMarket
+11 verbose cache add [ 'Lock@*', null ]
+12 verbose cache add name=undefined spec="Lock@*" args=["Lock@*",null]
+13 verbose parsed url { protocol: null,
+13 verbose parsed url   slashes: null,
+13 verbose parsed url   auth: null,
+13 verbose parsed url   host: null,
+13 verbose parsed url   port: null,
+13 verbose parsed url   hostname: null,
+13 verbose parsed url   hash: null,
+13 verbose parsed url   search: null,
+13 verbose parsed url   query: null,
+13 verbose parsed url   pathname: 'Lock@*',
+13 verbose parsed url   path: 'Lock@*',
+13 verbose parsed url   href: 'Lock@*' }
+14 verbose cache add name="Lock" spec="*" args=["Lock","*"]
+15 verbose parsed url { protocol: null,
+15 verbose parsed url   slashes: null,
+15 verbose parsed url   auth: null,
+15 verbose parsed url   host: null,
+15 verbose parsed url   port: null,
+15 verbose parsed url   hostname: null,
+15 verbose parsed url   hash: null,
+15 verbose parsed url   search: null,
+15 verbose parsed url   query: null,
+15 verbose parsed url   pathname: '*',
+15 verbose parsed url   path: '*',
+15 verbose parsed url   href: '*' }
+16 verbose addNamed [ 'Lock', '*' ]
+17 verbose addNamed [ null, '*' ]
+18 silly lockFile 4dd40bd8-Lock Lock@*
+19 verbose lock Lock@* /Users/codybartel/.npm/4dd40bd8-Lock.lock
+20 silly addNameRange { name: 'Lock', range: '*', hasData: false }
+21 verbose request where is /Lock
+22 verbose request registry https://registry.npmjs.org/
+23 verbose request id df575b189b3fc089
+24 verbose url raw /Lock
+25 verbose url resolving [ 'https://registry.npmjs.org/', './Lock' ]
+26 verbose url resolved https://registry.npmjs.org/Lock
+27 verbose request where is https://registry.npmjs.org/Lock
+28 info trying registry request attempt 1 at 15:41:39
+29 http GET https://registry.npmjs.org/Lock
+30 http 404 https://registry.npmjs.org/Lock
+31 verbose headers { date: 'Fri, 03 Apr 2015 19:41:39 GMT',
+31 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+31 verbose headers   'content-type': 'application/json',
+31 verbose headers   'cache-control': 'max-age=0',
+31 verbose headers   'content-length': '51',
+31 verbose headers   'accept-ranges': 'bytes',
+31 verbose headers   via: '1.1 varnish',
+31 verbose headers   age: '0',
+31 verbose headers   'x-served-by': 'cache-iad2128-IAD',
+31 verbose headers   'x-cache': 'MISS',
+31 verbose headers   'x-cache-hits': '0',
+31 verbose headers   'x-timer': 'S1428090099.789009,VS0,VE91',
+31 verbose headers   'keep-alive': 'timeout=10, max=50',
+31 verbose headers   connection: 'Keep-Alive' }
+32 silly registry.get cb [ 404,
+32 silly registry.get   { date: 'Fri, 03 Apr 2015 19:41:39 GMT',
+32 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+32 silly registry.get     'content-type': 'application/json',
+32 silly registry.get     'cache-control': 'max-age=0',
+32 silly registry.get     'content-length': '51',
+32 silly registry.get     'accept-ranges': 'bytes',
+32 silly registry.get     via: '1.1 varnish',
+32 silly registry.get     age: '0',
+32 silly registry.get     'x-served-by': 'cache-iad2128-IAD',
+32 silly registry.get     'x-cache': 'MISS',
+32 silly registry.get     'x-cache-hits': '0',
+32 silly registry.get     'x-timer': 'S1428090099.789009,VS0,VE91',
+32 silly registry.get     'keep-alive': 'timeout=10, max=50',
+32 silly registry.get     connection: 'Keep-Alive' } ]
+33 silly lockFile 4dd40bd8-Lock Lock@*
+34 silly lockFile 4dd40bd8-Lock Lock@*
+35 error 404 404 Not Found: Lock
+35 error 404
+35 error 404 'Lock' is not in the npm registry.
+35 error 404 You should bug the author to publish it
+35 error 404 It was specified as a dependency of 'stockExchangeMarket'
+35 error 404
+35 error 404 Note that you can also install from a
+35 error 404 tarball, folder, or http url, or git url.
+36 error System Darwin 14.0.0
+37 error command "node" "/usr/local/bin/npm" "install"
+38 error cwd /Users/codybartel/Documents/SE3314B/SE3314BAssignment2/stockExchangeMarket
+39 error node -v v0.10.33
+40 error npm -v 1.4.28
+41 error code E404
+42 verbose exit [ 1, true ]
