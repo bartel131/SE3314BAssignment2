@@ -101,7 +101,7 @@ app.post('/companies', function(request, response){
         changePercentage: request.body.company.changePercentage,
         shareVolume: request.body.company.shareVolume
     });
-    lock('newCompany', function(release){
+    lock('Companies', function(release){
         newCompany.save(function(error) {
             if (error) response.send(error);
             response.status(201).json({Companies : newCompany});
@@ -118,7 +118,7 @@ app.post('/saleOrders', function(request, response){
         price: request.body.saleOrder.price,
         company: request.body.saleOrder.company
     });
-    lock('newSaleOrder', function(release){
+    lock('SaleOrders', function(release){
         newSaleOrder.save(function(error){
             if (error) response.send(error);
             response.status(201).json({SaleOrders : newsaleOrder});
@@ -137,7 +137,7 @@ app.post('/buyOrders', function(request, response){
         price: request.body.buyOrder.price,
         company: request.body.buyOrder.company
     });
-    lock('newBuyOrder', function(relase){
+    lock('BuyOrders', function(relase){
         newBuyOrder.save(function(error){
             if (error) response.send(error);
             response.status(201).json({BuyOrders : newbuyOrder});
@@ -156,7 +156,7 @@ app.post('/transactions', function(request, response){
         price: request.body.transaction.price,
         company: request.body.transaction.company
     });
-    lock('newTransaction', function(release){
+    lock('Transactions', function(release){
         newTransaction.save(function(error){
             if(error) response.send(error);
             response.status(201).json({Transactions: newTransaction})
