@@ -1,0 +1,19 @@
+<h2>Add new post</h2>
+
+    <form>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>Tile
+                    {{input value=title  id="title" type="text" }}
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>Body
+                    {{textarea value=body  id="body" }}
+                </label>
+            </div>
+        </div>
+    </form>
+    <a href="#" class="button radius" {{action 'save'}}>Save</a>

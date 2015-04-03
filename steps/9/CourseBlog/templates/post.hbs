@@ -1,0 +1,30 @@
+<h2>{{model.title}}</h2>
+
+{{#if isEditing}}
+    <form>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>Tile
+                    {{input value=model.title type="text" }}
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>Body
+                    {{textarea value=model.body }}
+                </label>
+            </div>
+        </div>
+    </form>
+    <a href="#" class="button radius" {{action 'save'}}>Save</a>
+{{else}}
+    <ul class="square">
+        <ul>
+            <li>{{model.body}}</li>
+        </ul>
+    </ul>
+    <a href="#" class="button radius" {{action 'edit'}}>Edit</a>
+    <a href="#" class="button alert" {{action 'delete'}}>Delete</a>
+
+{{/if}}

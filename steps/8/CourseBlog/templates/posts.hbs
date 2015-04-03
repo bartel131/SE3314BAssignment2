@@ -1,0 +1,11 @@
+<h2>Welcome to SE3314b's Blog</h2>
+<ul class="circle">
+    <ul>
+        {{#each item in model}}
+            <li>{{#link-to 'post' item.id}}{{item.title}}{{/link-to}}</li>
+        {{/each}}
+    </ul>
+</ul>
+
+
+

@@ -1,0 +1,17 @@
+
+        <h2>Contact</h2>
+        <h3>Dr. Abdelkader Ouda</h3>
+
+        <div class="row">
+            <div class="small-6 columns">
+                <ul class="square">
+                    <li>{{#link-to 'phone'}}Phone{{/link-to}}</li>
+                    <li>{{#link-to 'email'}}Email{{/link-to}}</li>
+                </ul>
+                <p>Or <a href="#" {{action 'sendMessage'}}>click here</a> to send a message</p>
+            </div>
+            <div class="small-6 columns">
+                {{outlet}}
+            </div>
+        </div>
+
