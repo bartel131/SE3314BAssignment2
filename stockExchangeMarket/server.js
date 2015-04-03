@@ -10,7 +10,7 @@ var methodOverride = require('method-override'); // simulate DELETE and PUT (exp
 
 // configuration =================
 
-mongoose.connect('mongodb://node:nodeuser@mongo.onmodulus.net:27017/uwO3mypu');     // connect to mongoDB database on modulus.io
+mongoose.connect('mongodb://bartel131:Hermaco30@proximus.modulusmongo.net:27017/meqen9Og');     // connect to mongoDB database on modulus.io
 
 app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
 app.use(morgan('dev'));                                         // log every request to the console
