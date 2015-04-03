@@ -5,11 +5,12 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var logger = require('./logger');
-
+var Lock = require('lock');
 //Connect to MONGO DB
-mongoose.connect('mongodb://localhost:27017/stockTEMP_');
+mongoose.connect('mongodb://localhost:27017/stockDB');
 
 var app = express();
+var lock = Lock();
 
 app.use(logger);//will allow
 app.use(bodyParser.urlencoded({extended: true}));
@@ -100,43 +101,49 @@ app.post('/companies', function(request, response){
         changePercentage: request.body.company.changePercentage,
         shareVolume: request.body.company.shareVolume
     });
+    lock('newCompany', function(release){
+        newCompany.save(function(error) {
+            if (error) response.send(error);
+            response.status(201).json({Companies : newCompany});
+        });
+    })
 
-    newCompany.save(function(error) {
-        if (error) response.send(error);
-        response.status(201).json({Companies : newCompany});
-    });
 });
 
 //Post to sellOrders
 app.post('/saleOrders', function(request, response){
-    var newsaleOrder = new SaleOrders({
+    var newSaleOrder = new SaleOrders({
         timeStamp: request.body.saleOrder.timeStamp,
         size: request.body.saleOrder.size,
         price: request.body.saleOrder.price,
         company: request.body.saleOrder.company
     });
+    lock('newSaleOrder', function(release){
+        newSaleOrder.save(function(error){
+            if (error) response.send(error);
+            response.status(201).json({SaleOrders : newsaleOrder});
+        });
+    })
 
-    newsaleOrder.save(function(error){
-        if (error) response.send(error);
-        response.status(201).json({SaleOrders : newsaleOrder});
-    });
 
     console.log(request.body);
 });
 
 //Post to buyorders
 app.post('/buyOrders', function(request, response){
-    var newbuyOrder = new BuyOrders({
+    var newBuyOrder = new BuyOrders({
         timeStamp: request.body.buyOrder.timeStamp,
         size: request.body.buyOrder.size,
         price: request.body.buyOrder.price,
         company: request.body.buyOrder.company
     });
+    lock('newBuyOrder', function(relase){
+        newBuyOrder.save(function(error){
+            if (error) response.send(error);
+            response.status(201).json({BuyOrders : newbuyOrder});
+        });
+    })
 
-    newbuyOrder.save(function(error){
-        if (error) response.send(error);
-        response.status(201).json({BuyOrders : newbuyOrder});
-    });
 
     console.log(request.body);
 });
@@ -149,11 +156,13 @@ app.post('/transactions', function(request, response){
         price: request.body.transaction.price,
         company: request.body.transaction.company
     });
+    lock('newTransaction', function(release){
+        newTransaction.save(function(error){
+            if(error) response.send(error);
+            response.status(201).json({Transactions: newTransaction})
+        });
+    })
 
-    newTransaction.save(function(error){
-        if(error) response.send(error);
-        response.status(201).json({Transactions: newTransaction})
-    });
 
     console.log(request.body);
 });
